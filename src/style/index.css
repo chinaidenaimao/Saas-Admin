@@ -1,0 +1,111 @@
+/* ========== 全局样式初始化 ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== 解决字体模糊、平滑滚动 ========== */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== 基础标签重置 ========== */
+body {
+  font-family:
+    "Microsoft YaHei",
+    "PingFang SC",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  border: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ========== 清除浮动 ========== */
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+}
+
+/* ========== 全局常用工具类 ========== */
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.flex {
+  display: flex;
+}
+
+/* ========== 解决移动端点击高亮 ========== */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
