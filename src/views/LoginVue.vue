@@ -7,7 +7,7 @@
         <el-input v-model="loginForm.username" placeholder="请输入账号 / 用户名" class="input-item"></el-input>
       </el-form-item>
       <el-form-item label="" prop="password">
-        <el-input v-model="loginForm.password" placeholder="请输入密码" type="password" class="input-item"></el-input>
+        <el-input v-model="loginForm.password" placeholder="请输入密码" type="password" class="input-item" show-password></el-input>
       </el-form-item>
       <el-button type="primary" class="login-btn" @click="toLogin">立即登录</el-button>
       <div class="login-tip">
@@ -24,7 +24,7 @@ import {reqLogin,reqUserInfo} from '@/apis/user/index'
 import { ref } from "vue";
 import { useUserStore } from '@/stores/counter'
 import type { FormInstance } from "element-plus/es/components/form";
-import { ElMessage } from 'element-plus';
+import { ElMessage,ElNotification } from 'element-plus';
 import {useRouter} from 'vue-router';
 const router = useRouter();
 const formRef = ref<FormInstance>();
@@ -64,6 +64,14 @@ const toLogin=async()=>{
     // 登录成功后，清空表单
     formRef.value?.resetFields();
     // 路由跳转到首页
+    const now=new Date();
+    const time=now.toLocaleString().split(' ')[1].split(':')[0];
+    const data=time>'12'?'下午':'上午';
+    ElNotification({
+      title:`Hi！${data}好`,
+      message:`欢迎回来`,
+      type:'success'
+    });
     router.push({name:'home'})
   }
   catch(err){
