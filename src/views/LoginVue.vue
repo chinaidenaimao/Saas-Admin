@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import type { LoginRequest } from '@/types';
-import {reqLogin,reqUserInfo} from '@/apis/user/index'
+import {reqLogin} from '@/apis/user/index'
 import { ref } from "vue";
 import { useUserStore } from '@/stores/counter'
 import type { FormInstance } from "element-plus/es/components/form";
@@ -58,9 +58,7 @@ const toLogin=async()=>{
     // 登录成功后，将token存储到store中
     localStorage.setItem('token',res.data);
     // 登录成功后，获取用户信息
-    const userInfo=await reqUserInfo()
-      // 登录成功后，将用户信息存储到store中
-    useUserStore().user=userInfo.data
+    useUserStore().token=res.data
     // 登录成功后，清空表单
     formRef.value?.resetFields();
     // 路由跳转到首页

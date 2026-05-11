@@ -26,5 +26,7 @@ export const useUserStore=defineStore('user',()=>{
   const menuList=ref(constantRoute)
   // 是否折叠菜单
   const isCollapse=ref(false)
-  return {token,user,menuList,isCollapse}
+  // 是否刷新
+  const isRefresh=ref(false)
+  return {token,user,menuList,isCollapse,isRefresh}
 })

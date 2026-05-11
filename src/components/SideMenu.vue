@@ -3,7 +3,7 @@
     <h5 v-show="!isCollapse" class="mb-2">Admin系统</h5>
     <h5 v-show="isCollapse" class="mb-2 collapse-title">A</h5>
     <el-scrollbar>
-      <el-menu :default-active="isActive" :collapse="isCollapse" @select="handleSelect" collapse-transition="false" mode="vertical" >
+      <el-menu :default-active="isActive" :collapse="isCollapse" @select="handleSelect" :collapse-transition="false" mode="vertical" >
         <template v-for="item in menuList" :key="item.path">
           <!-- 没有子路由 -->
           <template v-if="!item.children">

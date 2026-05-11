@@ -19,6 +19,13 @@ import HeaderNav from '@/components/HeaderNav.vue'
 import SideMenu from '@/components/SideMenu.vue'
 import MainVue from '@/layout/MainVue.vue'
 import { useUserStore } from '@/stores/counter'
+import { reqUserInfo } from '@/apis/user/index'
+import { onMounted } from 'vue'
+onMounted(async ()=>{
+    const userInfo=await reqUserInfo()
+      // 登录成功后，将用户信息存储到store中
+    useUserStore().user=userInfo.data
+})
 </script>
 
 <style scoped lang="scss">

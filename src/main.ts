@@ -9,6 +9,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './style/index.scss'
 import App from './App.vue'
 import router from './router'
+import '@/permisstion'
 const app = createApp(App)
 // 注册全局图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
