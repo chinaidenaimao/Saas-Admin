@@ -6,7 +6,7 @@
         <el-header >
           <HeaderNav/>
         </el-header>
-        <el-main>
+        <el-main >
           <MainVue/>
         </el-main>
       </el-container>
@@ -19,13 +19,6 @@ import HeaderNav from '@/components/HeaderNav.vue'
 import SideMenu from '@/components/SideMenu.vue'
 import MainVue from '@/layout/MainVue.vue'
 import { useUserStore } from '@/stores/counter'
-import { reqUserInfo } from '@/apis/user/index'
-import { onMounted } from 'vue'
-onMounted(async ()=>{
-    const userInfo=await reqUserInfo()
-      // 登录成功后，将用户信息存储到store中
-    useUserStore().user=userInfo.data
-})
 </script>
 
 <style scoped lang="scss">
@@ -36,9 +29,12 @@ onMounted(async ()=>{
     background-color: #f5f7fa;
     .el-header
     {
-      height: 60px;
+      height: 80px;
       padding: 0;
       background-color: #f5f7fa;
+    }
+    .el-main{
+      padding: 20px;
     }
   }
 }

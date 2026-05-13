@@ -3,8 +3,10 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { loadEnv } from 'vite'
 // https://vite.dev/config/
-export default defineConfig(() => {
+export default defineConfig(({mode}) => {
+  const env=loadEnv(mode,process.cwd())
   return {
     plugins: [vue(), vueDevTools()],
     resolve: {
@@ -21,8 +23,8 @@ export default defineConfig(() => {
     },
     server: {
       proxy: {
-       '/api': {
-          target: 'http://127.0.0.1:10086',
+       [env.VITE_BASE_URL]: {
+          target: env.VITE_API_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         }

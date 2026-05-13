@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import setting from '@/setting'
+document.title=setting.title
 </script>
 
 <template>
