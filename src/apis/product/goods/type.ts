@@ -14,3 +14,11 @@ export interface ResponseData<T> {
   ok: boolean
   data: T
 }
+export interface TrademarkListPage {
+  "records": TrademarkList[]
+  "total": number,
+  "size": number,
+  "current": number,
+  "searchCount": true,
+  "pages": number
+}
