@@ -5,11 +5,11 @@
       title="添加商品品牌"
       width="900"
       :before-close="handleClose"
-      :closed="handleClose"
+      @closed="handleClose"
     >
       <el-form ref="RefForm" :model="goodsData" label-width="80px" :rules="rules">
         <el-form-item label="序号" v-if="goodsData.id">
-          <el-input v-model="goodsData.id" placeholder="请输入序号"></el-input>
+          <el-input v-model="goodsData.id" placeholder="请输入序号" disabled></el-input>
         </el-form-item>
         <el-form-item label="品牌名称" prop="tmName">
           <el-input v-model="goodsData.tmName" placeholder="请输入品牌名称"></el-input>
@@ -39,7 +39,7 @@
     </el-dialog>
       <el-card >
         <div class="header">
-        <el-button type="primary" @click="  dialogVisible=true">
+        <el-button type="primary" @click="handleAddClick">
             <el-icon><Plus></Plus></el-icon>
             添加商品</el-button>
         </div>
@@ -52,9 +52,9 @@
               </template>
             </el-table-column>
             <el-table-column prop="address" label="品牌操作"  fixed="right"  align="center" >
-              <template #default>
-                <el-button type="primary"  style="margin-right: 20px;">编辑</el-button>
-                <el-button type="danger" >删除</el-button>
+              <template #default="scoped">
+                <el-button type="primary"  style="margin-right: 20px;" @click="handleAddClick(scoped.row)">编辑</el-button>
+                <el-button type="danger" @click="deleteTrademarkdata(scoped.row.id)" >删除</el-button>
               </template>
             </el-table-column>
       </el-table>
@@ -76,24 +76,19 @@
 
 <script setup lang="ts">
 import {ref,onMounted } from 'vue'
-import { getListPage ,saveTrademark} from '@/apis/product/goods'
+import { getListPage ,saveTrademark,updateTrademark,deleteTrademark} from '@/apis/product/goods'
 import type { TrademarkList } from '@/apis/product/goods/type'
-import { ElMessage,UploadProps  } from 'element-plus'
+import { ElMessage,UploadProps ,ElMessageBox } from 'element-plus'
 const tableData=ref<TrademarkList[]>([])
-// const getListData=async ()=>{
-//   const res=await getListList()
-//   console.log(res.data)
-//   tableData.value=res.data
-// }
 // 分页配置
 const pageconfig=ref({
   currentPage:1,
-  pageSize:3,
-  total:100,
+  pageSize:5,
+  total:0,
 })
 // 商品品牌数据
 const goodsData=ref({
-  id:'',
+  id:0,
   tmName:'',
   logoUrl:'',
 })
@@ -120,7 +115,14 @@ const dialogVisible=ref(false)
 // 关闭窗口
 const handleClose=()=>{
   dialogVisible.value=false
-  RefForm.value.resetFields()
+  goodsData.value={id:0,tmName:'',logoUrl:''}
+}
+// 添加商品
+const handleAddClick=(data?:TrademarkList)=>{
+  dialogVisible.value=true
+  if(data){
+    goodsData.value={id:data.id,tmName:data.tmName,logoUrl:data.logoUrl}
+  }
 }
 // 分页查询商品品牌
 const getListPageData=async ()=>{
@@ -151,20 +153,45 @@ const beforeAvatarUpload:UploadProps['beforeUpload']=(file)=>{
     return false
   }
 }
-const  handleSubmitForm=async()=>{
-  const valid=await RefForm.value.validate()
-  if(!valid){
-    return
+// 删除商品品牌
+ const deleteTrademarkdata = async (id: number) => {
+    try {
+      await ElMessageBox.confirm('确认删除吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+    } catch {
+      return // 用户点了取消，直接返回
+    }
+    await deleteTrademark(id)
+    ElMessage.success('删除成功')
+    getListPageData()
   }
-  else{
-    ElMessage.success('添加成功')
-    dialogVisible.value=false
+// 提交表单
+const  handleSubmitForm=async()=>{
+  RefForm.value.validate().then(async ()=>{
+      if(goodsData.value.id)
+  {
+    await updateTrademark({
+      id:Number(goodsData.value.id),
+      logoUrl:goodsData.value.logoUrl,
+      tmName:goodsData.value.tmName,
+    })
+  }
+  else
+  {
     await saveTrademark({
       logoUrl:goodsData.value.logoUrl,
       tmName:goodsData.value.tmName,
     })
-    getListPageData()
   }
+    ElMessage.success('操作成功')
+    dialogVisible.value=false
+    getListPageData()
+  },()=>{
+    return
+  })
 }
 
 onMounted(()=>{
