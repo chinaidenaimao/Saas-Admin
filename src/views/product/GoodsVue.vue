@@ -64,11 +64,15 @@
           v-model:current-page="pageconfig.currentPage"
           size="default"
           background
-           layout="total, sizes, prev, pager,next,->, jumper"
+           layout="slot, sizes, prev, pager,next,->, jumper,"
           :total="pageconfig.total"
           class="mt-4"
           @change="getListPageData"
-        />
+        >
+          <template #default>
+            共 {{ pageconfig.total }} 条
+          </template>
+        </el-pagination>
       </el-card>
 
   </div>
@@ -78,7 +82,8 @@
 import {ref,onMounted } from 'vue'
 import { getListPage ,saveTrademark,updateTrademark,deleteTrademark} from '@/apis/product/goods'
 import type { TrademarkList } from '@/apis/product/goods/type'
-import { ElMessage,UploadProps ,ElMessageBox } from 'element-plus'
+import { ElMessage ,ElMessageBox } from 'element-plus'
+import type{UploadProps} from 'element-plus'
 const tableData=ref<TrademarkList[]>([])
 // 分页配置
 const pageconfig=ref({

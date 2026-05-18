@@ -48,7 +48,6 @@ import router from '@/router'
 import { ElMessage } from 'element-plus'
 const route = useRoute();
 const matched = computed(()=>route.matched)
-console.log(route)
 // 全屏切换
 const fullscreen=()=>{
   const full=document.fullscreenElement

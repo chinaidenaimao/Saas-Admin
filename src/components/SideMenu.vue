@@ -7,13 +7,13 @@
         <template v-for="item in menuList" :key="item.path">
           <!-- 没有子路由 -->
           <template v-if="!item.children">
-            <el-menu-item v-if="item.meta.hidden==false" :index="item.path" class="menu-item" popper-class="sub-menu">
+            <el-menu-item v-if="item.meta?.hidden==false" :index="item.path" class="menu-item" popper-class="sub-menu">
               <component :is="item.meta?.icon" class="icon"></component>
                 <span>{{ item.meta?.title || item.path }}</span></el-menu-item>
           </template>
           <!-- 有一个子路由 -->
           <template v-if="item.children && item.children.length == 1">
-            <el-menu-item v-if="item.children[0].meta.hidden==false" :index="item.children[0].path" class="menu-item" popper-class="sub-menu">
+            <el-menu-item v-if="item.children[0].meta?.hidden==false" :index="item.children[0].path" class="menu-item" popper-class="sub-menu">
               <component :is="item.children[0].meta?.icon" class="icon"></component>
                 <span>{{ item.children[0].meta?.title || item.children[0].path }}</span></el-menu-item>
           </template>
@@ -24,7 +24,7 @@
                 <span>{{ item.meta?.title || item.path }}</span>
               </template>
               <template v-for="child in item.children" :key="child.path">
-                <el-menu-item v-if="child.meta.hidden==false" :index="child.path" class="menu-item" popper-class="sub-menu">
+                <el-menu-item v-if="child.meta?.hidden==false" :index="child.path" class="menu-item" popper-class="sub-menu">
                   <component :is="child.meta?.icon" class="icon"></component>
                   <span>{{ child.meta?.title || child.path }}</span></el-menu-item>
               </template>
