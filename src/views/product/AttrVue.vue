@@ -278,7 +278,7 @@ const handleSubmitForm=async()=>{
 }
 // 取消
 const resetForm=()=>{
-  updataInfo.value={attrName:'',categoryId:0,categoryLevel:3,attrValueList:[] as AttrValue[]}
+  updataInfo.value={attrName:'',categoryId:Number(formdata.value.three),categoryLevel:3,attrValueList:[] as AttrValue[]}
   attrValue.value={valueName:'',flag:false}
   inputArr.value=[]
   typeTable.value=0

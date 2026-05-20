@@ -23,7 +23,13 @@ export interface page {
 export interface userListResponseData {
   code: number
   msg: string
-  data: userlist[] & page
+  data: {
+    records: userlist[]
+    "total": number,
+    "size": number,
+    "current": number,
+    "pages": number
+  }
   ok: boolean
 }
 export interface assignRoles {

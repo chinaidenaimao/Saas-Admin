@@ -1,5 +1,6 @@
 import https from '@/utils/https'
 import type { userListResponseData, responseData,assignRoles } from './type'
+import { da } from 'element-plus/es/locale/index.mjs';
 enum API {
   // 用户列表
   USER_LIST_URL = '/admin/acl/user',
@@ -21,8 +22,8 @@ enum API {
  * @param page 页码
  * @param limit 每页数量
 */
-export const getUserList = (page: number, limit: number) =>
-  https.get(API.USER_LIST_URL+'/'+page+'/'+limit) as Promise<userListResponseData>
+export const getUserList = (page: number, limit: number,username?:string) =>
+  https.get(API.USER_LIST_URL+'/'+page+'/'+limit,{params:{username}}) as Promise<userListResponseData>
 /**
  * 更新用户
  * @param data 更新用户数据
@@ -32,7 +33,7 @@ export const updateUser = (data: {
   "name": string,
   "username": string
 }) =>
-  https.post(API.USER_UPDATE_URL,data) as Promise<responseData<string>>
+  https.put(API.USER_UPDATE_URL,data) as Promise<responseData<string>>
 /**
  * 保存用户
  * @param data 保存用户数据
@@ -63,7 +64,7 @@ export const assignRole = (data: {
  * @param adminId 用户id
 */
 export const removeUserById = (adminId: number) =>
-  https.delete(API.USER_REMOVE_URL,{data:adminId}) as Promise<responseData<string>>
+  https.delete(API.USER_REMOVE_URL+'/'+adminId) as Promise<responseData<string>>
 /**
  * 给用户分配角色
  * @param data 给用户分配角色数据
