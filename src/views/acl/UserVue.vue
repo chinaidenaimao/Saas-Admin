@@ -35,7 +35,7 @@
           </el-table-column>
             <el-table-column label="操作" fixed="right" min-width="300" align="center">
               <template #default="scope">
-                <el-button type="primary" >
+                <el-button type="primary" @click="usetoAssignRole(scope.row.id,scope.row.username)">
                   <el-icon> <User/></el-icon> 分配角色</el-button>
                 <el-button type="primary"  @click="editUser(scope.row)">
                   <el-icon> <Edit/></el-icon>  编辑</el-button>
@@ -77,17 +77,49 @@
     <el-drawer
     v-model="drawer2"
     size="600px"
-    :direction="direction"
-    :before-close="handleClose"
+    :direction="direction2"
+    :before-close="closeDrawer2"
   >
+  <template #title>
+    <span>分配角色用户</span>
+  </template>
+  <el-form ref="toAssignRoleForm" :model="toAssignRoleData" label-width="80px">
+    <el-form-item label="用户角色" prop="roleName" style=" margin-top: 10px;">
+        <el-input  placeholder="请输入用户角色" style="width: 400px;" v-model="assinguser.username" disabled=""></el-input>
+    </el-form-item>
+    <el-form-item label="角色列表">
+            <el-checkbox
+          v-model="checkAll"
+          :indeterminate="isIndeterminate"
+          @change="handleCheckAllChange"
+        >
+          全选
+        </el-checkbox>
+        <el-checkbox-group
+          v-model="checkedCities"
+          @change="handleCheckedCitiesChange"
+        >
+          <el-checkbox v-for="item in toAssignRoleData.allRolesList" :key="item.id" :label="item.id" :value="item.id">
+      {{ item.roleName }}
+    </el-checkbox>
+  </el-checkbox-group>
+    </el-form-item>
+  </el-form>
+  <template #footer>
+    <div>
+      <el-button  @click="closeDrawer2">取消</el-button>
+      <el-button type="primary" @click="commitdoAssignRole">提交</el-button>
+    </div>
+  </template>
   </el-drawer>
 </template>
 
 <script setup lang="ts">
-import type { assignRoles,page,userlist } from '@/apis/acl/user/type'
-import { getUserList,updateUser,saveUser,removeUserById,assignRole,doAssignRole } from '@/apis/acl/user'
+import type { assignRoles,page,userlist} from '@/apis/acl/user/type'
+import { getUserList,updateUser,saveUser,removeUserById,toAssignRole,doAssignRole } from '@/apis/acl/user'
 import { nextTick, onMounted, ref } from 'vue'
 import {  ElMessage, ElMessageBox } from 'element-plus'
+import type { CheckboxValueType } from 'element-plus'
 // 分页信息
 const pageinfo = ref<page>({
   total: 0,
@@ -106,6 +138,11 @@ const formdata = ref<userlist[]>([
     name: '',
     phone: '',}
 ])
+// 分配角色用户
+const toAssignRoleData = ref<{assignRoles:assignRoles[],allRolesList:assignRoles[]}>({
+  assignRoles:[],
+  allRolesList:[]
+})
 // 搜索用户
 const searchform = ref({
   username: '',
@@ -146,6 +183,55 @@ const editUser=(user: userlist)=>{
         addformref.value.clearValidate('name');
     })
 }
+// 分配角色
+const assinguser=ref({
+  "userId": 0,
+  username:''
+})
+const toAssignRoleForm=ref()
+const direction2=ref('rtl')
+// 分配角色用户
+const usetoAssignRole= async (id:number,username:string)=>{
+  assinguser.value.userId=id
+  assinguser.value.username=username
+  const res=await toAssignRole(id)
+  toAssignRoleData.value.allRolesList=res.data.allRolesList
+  toAssignRoleData.value.assignRoles=res.data.assignRoles
+  checkedCities.value=res.data.assignRoles.map((item) => item.id)
+  drawer2.value = true
+  console.log(res)
+}
+// 多选框
+const checkAll = ref(false)
+const isIndeterminate = ref(true)
+const checkedCities = ref<number[]|string[]>([])
+
+const handleCheckAllChange = (val: CheckboxValueType) => {
+  checkedCities.value = val ? toAssignRoleData.value.allRolesList.map((item) => item.id) : []
+  isIndeterminate.value = false
+}
+const handleCheckedCitiesChange = (value: CheckboxValueType[]) => {
+  const checkedCount = value.length
+  checkAll.value = checkedCount === toAssignRoleData.value.allRolesList.length
+  isIndeterminate.value = checkedCount > 0 && checkedCount < toAssignRoleData.value.allRolesList.length
+}
+// 提交用户分配角色
+const commitdoAssignRole=async()=>{
+  try{
+    await toAssignRoleForm.value.validate()
+  }
+  catch{
+    ElMessage.error('分配角色失败')
+    return
+  }
+  await doAssignRole({
+    userId:assinguser.value.userId,
+    roleIdList:checkedCities.value as number[]
+  })
+  ElMessage.success('分配角色成功')
+  getHasUser()
+  closeDrawer2()
+}
 // 删除用户
 const deleteUser=async(id:number)=>{
   try{
@@ -172,6 +258,14 @@ const deleteUser=async(id:number)=>{
 const drawer = ref(false)
 const drawer2 = ref(false)
 const direction = ref('rtl')
+// 关闭抽屉
+const closeDrawer2=()=>{
+  checkedCities.value=[]
+  toAssignRoleForm.value.resetFields()
+  assinguser.value.userId=0
+  assinguser.value.username=''
+  drawer2.value = false
+}
 const handleClose = () => {
   ElMessageBox.confirm('确认关闭吗？', '提示', {
     confirmButtonText: '确定',

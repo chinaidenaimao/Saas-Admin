@@ -1,6 +1,5 @@
 import https from '@/utils/https'
 import type { userListResponseData, responseData,assignRoles } from './type'
-import { da } from 'element-plus/es/locale/index.mjs';
 enum API {
   // 用户列表
   USER_LIST_URL = '/admin/acl/user',
@@ -54,8 +53,8 @@ export const removeUser = (adminId: number[]) =>
  * 给用户分配角色
  * @param data 给用户分配角色数据
 */
-export const assignRole = (data: {
-  "id": number,
+export const doAssignRole = (data: {
+  "userId": number,
   "roleIdList": number[]
 }) =>
   https.post(API.USER_DO_ASSIGN_ROLE_URL,data) as Promise<responseData<string>>
@@ -69,5 +68,5 @@ export const removeUserById = (adminId: number) =>
  * 给用户分配角色
  * @param data 给用户分配角色数据
 */
-export const doAssignRole = (data:number) =>
-  https.get(API.USER_DO_ASSIGN_ROLE_URL+'/'+data) as Promise<responseData<{assignRoles:assignRoles[],allRolesList:assignRoles[]}>>
+export const toAssignRole = (data:number) =>
+  https.get(API.USER_TO_ASSIGN_ROLE_URL+'/'+data) as Promise<responseData<{assignRoles:assignRoles[],allRolesList:assignRoles[]}>>
