@@ -30,7 +30,7 @@
           </el-table-column>
             <el-table-column label="操作" fixed="right" min-width="300" align="center">
               <template #default="scope">
-                <el-button type="primary" >
+                <el-button type="primary" @click="openDrawer2(scope.row)">
                   <el-icon> <User/></el-icon> 分配角色</el-button>
                 <el-button type="primary"  @click="openDrawer(scope.row)">
                   <el-icon> <Edit/></el-icon>  编辑</el-button>
@@ -98,6 +98,7 @@
 import { onMounted, ref } from 'vue'
 import { getAllUser ,deleteRole,updateRole,addRole} from '@/apis/acl/drole'
 import type { page,assignRoles} from '@/apis/acl/drole/type'
+import type ElTree from 'element-plus/es/components/tree'
 // 分页信息
 const pageInfo = ref<page>({
   total: 0,
@@ -106,6 +107,8 @@ const pageInfo = ref<page>({
   pages: 0,
 })
 const drawer=ref(false)
+const drawer2=ref(false)
+const treeRef = ref<InstanceType<typeof ElTree>>()
 const rules = ref({
   roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
 })
@@ -122,6 +125,86 @@ const updateForm = ref({
 const searchForm = ref({
   roleName: '',
 })
+// 当前分配角色ID
+const currentRoleId = ref<number>(0)
+// 已选中的权限ID
+const checkedKeys = ref<number[]>([])
+// 菜单权限数据 (静态)
+const menuData = ref([
+  {
+    id: 1,
+    name: '系统管理',
+    children: [
+      {
+        id: 11,
+        name: '用户管理',
+        children: [
+          { id: 111, name: '查看' },
+          { id: 112, name: '新增' },
+          { id: 113, name: '编辑' },
+          { id: 114, name: '删除' },
+        ],
+      },
+      {
+        id: 12,
+        name: '角色管理',
+        children: [
+          { id: 121, name: '查看' },
+          { id: 122, name: '新增' },
+          { id: 123, name: '编辑' },
+          { id: 124, name: '删除' },
+          { id: 125, name: '分配权限' },
+        ],
+      },
+      {
+        id: 13,
+        name: '菜单管理',
+        children: [
+          { id: 131, name: '查看' },
+          { id: 132, name: '新增' },
+          { id: 133, name: '编辑' },
+          { id: 134, name: '删除' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: '商品管理',
+    children: [
+      {
+        id: 21,
+        name: '品牌管理',
+        children: [
+          { id: 211, name: '查看' },
+          { id: 212, name: '新增' },
+          { id: 213, name: '编辑' },
+          { id: 214, name: '删除' },
+        ],
+      },
+      {
+        id: 22,
+        name: '分类管理',
+        children: [
+          { id: 221, name: '查看' },
+          { id: 222, name: '新增' },
+          { id: 223, name: '编辑' },
+          { id: 224, name: '删除' },
+        ],
+      },
+      {
+        id: 23,
+        name: '平台属性',
+        children: [
+          { id: 231, name: '查看' },
+          { id: 232, name: '新增' },
+          { id: 233, name: '编辑' },
+          { id: 234, name: '删除' },
+        ],
+      },
+    ],
+  },
+])
 // 获取所有角色
 const getAllRole = async () => {
   const res = await getAllUser(pageInfo.value.current, pageInfo.value.size,searchForm.value.roleName)
@@ -188,6 +271,28 @@ const handleClose = () => {
     remark: '',
     roleName: '',
   }
+}
+// 打开分配角色抽屉
+const openDrawer2 = (row: assignRoles) => {
+  currentRoleId.value = row.id
+  // 这里可以模拟已选中的权限，实际应该从后端获取
+  checkedKeys.value = [111, 112, 121, 211]
+  drawer2.value = true
+}
+// 关闭分配角色抽屉
+const closeDrawer2 = () => {
+  drawer2.value = false
+  checkedKeys.value = []
+}
+// 提交分配权限
+const handleAssignSubmit = () => {
+  const checkedNodes = treeRef.value?.getCheckedKeys()
+  const halfCheckedNodes = treeRef.value?.getHalfCheckedKeys()
+  console.log('选中的权限:', checkedNodes)
+  console.log('半选中的权限:', halfCheckedNodes)
+  console.log('角色ID:', currentRoleId.value)
+  // TODO: 调用后端API保存权限
+  drawer2.value = false
 }
 // 提交表单
 const handleSubmitForm = async () => {
