@@ -22,7 +22,7 @@ export const addRole = (data: {
   return https.post(API.ADDROLE_URL, data) as Promise<responseData<string>>
 }
 // 删除角色
-export const deleteRole = (id:string) => {
+export const deleteRole = (id: string | number) => {
   return https.delete(API.DELETEROLE_URL+'/'+id) as Promise<responseData<string>>
 }
 // 更新角色

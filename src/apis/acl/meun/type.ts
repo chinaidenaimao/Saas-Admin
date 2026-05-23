@@ -1,29 +1,24 @@
 
-export interface permissionData{
-   "ID": number,
-    "children": string[]
-    "code": string
-    "createTime": {
-      "time.Time": string
-    },
-    "id": number,
-    "level": number,
-    "name": string,
-    "pid": 0,
-    "select": true,
-    "status": string,
-    "toCode": string,
-    "type": number,
-    "updateTime": {
-      "time.Time": string
-    }
+export interface Permisstion {
+  id?: number
+  createTime: string
+  updateTime: string
+  pid: number
+  name: string
+  code: string
+  toCode: string
+  type: number
+  status: number
+  level: number
+  children?: PermisstionList
+  select: boolean
 }
+export type PermisstionList = Permisstion[]
 export interface saveMenuData{
   "code": string,
   "level": number,
   "name": string,
   "pid": number,
-  "type": number
 }
 export interface ResponseData<T>{
   code: number
@@ -37,4 +32,4 @@ export interface updateMenuData{
   "level": number,
   "name": string,
   "pid": number
-} 
+}

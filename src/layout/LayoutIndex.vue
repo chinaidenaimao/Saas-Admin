@@ -39,3 +39,22 @@ import { useUserStore } from '@/stores/counter'
   }
 }
 </style>
+
+<style>
+/* 暗黑模式 - 布局 */
+html.dark .container-main {
+  background-color: #141414 !important;
+}
+
+html.dark .el-header {
+  background-color: #1d1e1f !important;
+}
+
+html.dark .el-main {
+  background-color: #141414;
+}
+
+html.dark .el-aside {
+  background-color: #1d1e1f;
+}
+</style>

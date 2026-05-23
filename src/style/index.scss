@@ -109,3 +109,114 @@ a,
 button {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* ========== 暗黑模式 ========== */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #141414;
+  color: #e0e0e0;
+}
+
+html.dark .el-card {
+  background-color: #1d1e1f;
+  border-color: #333;
+  color: #e0e0e0;
+}
+
+html.dark .el-card__header {
+  border-bottom-color: #333;
+}
+
+html.dark .el-card__header span,
+html.dark .el-card__header .card-title {
+  color: #e0e0e0;
+}
+
+html.dark .el-table {
+  --el-table-bg-color: #1d1e1f;
+  --el-table-tr-bg-color: #1d1e1f;
+  --el-table-header-bg-color: #262728;
+  --el-table-row-hover-bg-color: #2a2b2c;
+  --el-table-border-color: #333;
+  --el-table-text-color: #e0e0e0;
+  --el-table-header-text-color: #e0e0e0;
+}
+
+html.dark .el-table--border .el-table__inner-wrapper::after,
+html.dark .el-table--border::before,
+html.dark .el-table--border::after {
+  background-color: #333;
+}
+
+html.dark .el-input__wrapper,
+html.dark .el-select__wrapper {
+  background-color: #262728;
+  box-shadow: 0 0 0 1px #444 inset;
+}
+
+html.dark .el-input__inner,
+html.dark .el-select__input {
+  color: #e0e0e0;
+}
+
+html.dark .el-pagination {
+  --el-pagination-bg-color: transparent;
+  --el-pagination-text-color: #e0e0e0;
+  --el-pagination-button-disabled-bg-color: transparent;
+}
+
+html.dark .el-pagination .el-pager li {
+  background-color: #262728;
+  color: #e0e0e0;
+}
+
+html.dark .el-pagination .btn-prev,
+html.dark .el-pagination .btn-next {
+  background-color: #262728;
+  color: #e0e0e0;
+}
+
+html.dark .el-form-item__label {
+  color: #e0e0e0;
+}
+
+html.dark .el-dialog {
+  background-color: #1d1e1f;
+}
+
+html.dark .el-dialog__title {
+  color: #e0e0e0;
+}
+
+html.dark .el-tree {
+  background-color: transparent;
+  color: #e0e0e0;
+}
+
+html.dark .el-drawer {
+  background-color: #1d1e1f;
+}
+
+html.dark .el-drawer__header span {
+  color: #e0e0e0;
+}
+
+html.dark .el-pagination__total,
+html.dark .el-pagination__jump {
+  color: #e0e0e0;
+}
+
+html.dark .el-pagination .el-pagination__sizes .el-select__wrapper {
+  background-color: #262728;
+}
+
+html.dark .home-container {
+  background-color: #141414;
+}
+
+html.dark .el-tag {
+  border-color: #444;
+}
