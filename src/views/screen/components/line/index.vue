@@ -36,6 +36,7 @@ onMounted(() => {
             backgroundColor: 'rgba(5, 15, 40, 0.9)',
             borderColor: 'rgba(0, 242, 255, 0.3)',
             textStyle: { color: '#fff' },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             formatter: (params: any) => {
                 const p = params[0];
                 return `${p.axisValue}<br/>访问量: <b>${(p.value / 10000).toFixed(1)}w</b>`;
