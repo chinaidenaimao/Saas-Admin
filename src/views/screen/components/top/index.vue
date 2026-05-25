@@ -54,7 +54,7 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     background: url(../../images/dataScreen-header-center-bg.png) no-repeat center bottom;
-    background-size: 100% auto;
+    background-size: 900px auto;
     position: relative;
 
     &::after {
