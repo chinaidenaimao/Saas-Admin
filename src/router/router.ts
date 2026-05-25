@@ -54,17 +54,11 @@ export const constantRoute: RouteRecordRaw[] = [
       icon: 'DocumentDelete',
     },
   },
-  {
-    path:'/:pathMatch(.*)*',
-    redirect:'/404',
-    name:'notFound',
-    meta:{
-      hidden:true,
-    }
-  },
-  {
-    path:'/acl',
-    name:'acl',
+
+]
+export const asyncRoute: RouteRecordRaw[] = [{
+    path:'/Acl',
+    name:'Acl',
     component: () => import('@/layout/LayoutIndex.vue'),
     meta: {
       title: '权限管理',
@@ -73,8 +67,8 @@ export const constantRoute: RouteRecordRaw[] = [
     },
     children:[
       {
-      path:'/acl/user',
-      name:'user',
+      path:'/Acl/user',
+      name:'User',
       component: () => import('@/views/acl/UserVue.vue'),
       meta: {
         title: '用户管理',
@@ -83,8 +77,8 @@ export const constantRoute: RouteRecordRaw[] = [
       },
     },
     {
-      path:'/acl/role',
-      name:'role',
+      path:'/Acl/role',
+      name:'Role',
       component: () => import('@/views/acl/RoleVue.vue'),
       meta: {
         title: '角色管理',
@@ -94,8 +88,8 @@ export const constantRoute: RouteRecordRaw[] = [
 
     },
     {
-      path:'/acl/role/permission',
-      name:'permission',
+      path:'/Acl/role/permission',
+      name:'Permission',
       component: () => import('@/views/acl/RolePermissionVue.vue'),
       meta: {
         title: '菜单权限',
@@ -106,8 +100,8 @@ export const constantRoute: RouteRecordRaw[] = [
   ]
   },
   {
-    path:'/product',
-    name:'product',
+    path:'/Product',
+    name:'Product',
     component: () => import('@/layout/LayoutIndex.vue'),
     meta: {
       title: '商品管理',
@@ -116,8 +110,8 @@ export const constantRoute: RouteRecordRaw[] = [
     },
     children:[
       {
-        path:'/product/goods',
-        name:'goods',
+        path:'/Product/goods',
+        name:'Trademark',
         component: () => import('@/views/product/GoodsVue.vue'),
         meta: {
           title: '品牌管理',
@@ -126,8 +120,8 @@ export const constantRoute: RouteRecordRaw[] = [
         },
       },
       {
-        path:'/product/attr',
-        name:'attr',
+        path:'/Product/attr',
+        name:'Attr',
         component: () => import('@/views/product/AttrVue.vue'),
         meta: {
           title: '商品属性',
@@ -136,8 +130,8 @@ export const constantRoute: RouteRecordRaw[] = [
         },
       },
        {
-        path:'/product/spu',
-        name:'spu',
+        path:'/Product/spu',
+        name:'Spu',
         component: () => import('@/views/product/SpuVue.vue'),
         meta: {
           title: '商品SPU',
@@ -146,8 +140,8 @@ export const constantRoute: RouteRecordRaw[] = [
         },
       },
        {
-        path:'/product/sku',
-        name:'sku',
+        path:'/Product/sku',
+        name:'Sku',
         component: () => import('@/views/product/SkuVue.vue'),
         meta: {
           title: '商品SKU',
@@ -156,5 +150,13 @@ export const constantRoute: RouteRecordRaw[] = [
         },
       }
     ]
-  }
-]
+  }]
+export const allRoute : RouteRecordRaw[] = [{
+    path:'/:pathMatch(.*)*',
+    redirect:'/404',
+    name:'notFound',
+    meta:{
+      hidden:true,
+    }
+  },
+  ]

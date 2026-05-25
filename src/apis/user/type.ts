@@ -12,7 +12,7 @@ export interface loginResponseData extends ResponseData {
 }
 export interface userInfoReponseData extends ResponseData {
   data: {
-    router: string[]
+    routes: string[]
     buttons: string[]
     roles: string[]
     name: string

@@ -23,7 +23,7 @@
       </el-form>
     </el-card>
     <el-card class="attr-card" v-show="typeTable==0">
-      <el-button type="primary" :disabled="!formdata.three" style="margin-bottom: 10px;" @click="typeTable=1">
+      <el-button type="primary" :disabled="!formdata.three" style="margin-bottom: 10px;" @click="typeTable=1" v-has="'btn.Attr.add'">
         <el-icon>
           <Plus />
         </el-icon>
@@ -46,12 +46,12 @@
           </el-table-column>
           <el-table-column width="200" label="操作" align="center" fixed="right">
             <template #default="scope">
-              <el-button type="primary" @click="handleEditClick(scope.row)">
+              <el-button type="primary" @click="handleEditClick(scope.row)" v-has="'btn.Attr.update'">
                 <el-icon>
                   <Edit />
                 </el-icon>
               </el-button >
-              <el-button type="danger" @click="handleDeleteClick(scope.row)">
+              <el-button type="danger" @click="handleDeleteClick(scope.row)" v-has="'btn.Attr.remove'">
                 <el-icon>
                   <Delete />
                 </el-icon>

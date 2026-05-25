@@ -13,8 +13,8 @@
   </el-card>
   <el-card>
     <div  style="margin-bottom: 10px;">
-      <el-button type="primary"  @click="addUser">添加用户</el-button>
-      <el-button type="danger" disabled>删除用户</el-button>
+      <el-button type="primary"  @click="addUser" v-has="'btn.User.add'">添加用户</el-button>
+      <el-button type="danger" disabled v-has="'btn.User.remove'">删除用户 </el-button>
     </div>
     <div style="margin-bottom: 12px;">
       <el-table :data="formData" style="width: 100%" border>
@@ -34,11 +34,11 @@
           </el-table-column>
             <el-table-column label="操作" fixed="right" min-width="300" align="center">
               <template #default="scope">
-                <el-button type="primary" @click="toAssignRole(scope.row.id, scope.row.username)">
+                <el-button type="primary" @click="toAssignRole(scope.row.id, scope.row.username)" v-has="'btn.User.assgin'">
                   <el-icon> <User/></el-icon> 分配角色</el-button>
-                <el-button type="primary"  @click="editUser(scope.row)">
-                  <el-icon> <Edit/></el-icon>  编辑</el-button>
-                <el-button type="primary" @click="deleteUser(scope.row.id)">
+                <el-button type="primary"  @click="editUser(scope.row)" v-has="'btn.User.update'">
+                  <el-icon> <Edit/></el-icon> 编辑</el-button>
+                <el-button type="primary" @click="deleteUser(scope.row.id)" v-has="'btn.User.remove'">
                   <el-icon> <Delete/></el-icon> 删除</el-button>
               </template>
           </el-table-column>

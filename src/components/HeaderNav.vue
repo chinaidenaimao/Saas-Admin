@@ -128,7 +128,7 @@ const logout=async ()=>{
   localStorage.removeItem('token')
   // 清空用户信息
   useUserStore().user= {
-    router: [],
+    routes: [],
     buttons: [],
     roles: [],
     name: '',

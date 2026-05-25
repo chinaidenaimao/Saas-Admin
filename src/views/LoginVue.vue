@@ -26,6 +26,7 @@ import { useUserStore } from '@/stores/counter'
 import type { FormInstance } from "element-plus/es/components/form";
 import { ElMessage,ElNotification } from 'element-plus';
 import {useRouter} from 'vue-router';
+// import {asyncRoute,allRoute} from '@/router/router'
 const router = useRouter();
 const formRef = ref<FormInstance>();
   // 登录表单
@@ -46,6 +47,7 @@ const rules = ref({
     trigger: ['blur', 'change']
   }]
 });
+
 // 登录提交
 const toLogin=async()=>{
   const valid=await formRef.value?.validate();
@@ -61,7 +63,7 @@ const toLogin=async()=>{
     useUserStore().token=res.data
     // 登录成功后，清空表单
     formRef.value?.resetFields();
-    // 路由跳转到首页
+
     const now=new Date();
     const time=now.toLocaleString().split(' ')[1].split(':')[0];
     const data=time>'12'?'下午':'上午';

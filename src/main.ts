@@ -10,11 +10,15 @@ import './style/index.scss'
 import App from './App.vue'
 import router from './router'
 import '@/permisstion'
+// 引入全局指令
+import { isHas } from '@/directive/has'
 const app = createApp(App)
 // 注册全局图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+// 注册全局指令
+isHas(app)
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)

@@ -13,7 +13,7 @@
   </el-card>
   <el-card>
     <div  style="margin-bottom: 10px;">
-      <el-button type="primary"  @click="openDrawer(undefined)">添加角色</el-button>
+      <el-button type="primary"  @click="openDrawer(undefined)" v-has="'btn.Role.add'">添加角色</el-button>
     </div>
     <div style="margin-bottom: 12px;">
       <el-table :data="assignRoleData" style="width: 100%" border>
@@ -29,11 +29,11 @@
           </el-table-column>
             <el-table-column label="操作" fixed="right" min-width="300" align="center">
               <template #default="scope">
-                <el-button type="primary" @click="openDrawer2(scope.row)">
+                <el-button type="primary" @click="openDrawer2(scope.row)" v-has="'btn.Role.assgin'">
                   <el-icon> <User/></el-icon> 分配角色</el-button>
-                <el-button type="primary"  @click="openDrawer(scope.row)">
-                  <el-icon> <Edit/></el-icon>  编辑</el-button>
-                <el-button type="primary" @click="deleteUser(scope.row.id)">
+                <el-button type="primary"  @click="openDrawer(scope.row)" v-has="'btn.Role.update'">
+                  <el-icon> <Edit/></el-icon> 编辑</el-button>
+                <el-button type="primary" @click="deleteUser(scope.row.id)" v-has="'btn.Role.remove'">
                   <el-icon> <Delete/></el-icon> 删除</el-button>
               </template>
           </el-table-column>

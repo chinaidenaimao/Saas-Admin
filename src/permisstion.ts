@@ -24,6 +24,13 @@ router.beforeEach(async (to, from, next) => {
       try{
         const userInfo=await reqUserInfo()
         userStore.user=userInfo.data
+        // 登录成功后，获取用户路由
+        userStore.getRouter()
+        // 刷新页面后首次导航未匹配到路由，重试一次
+        if (!to.matched.length) {
+          next({ path: to.path, replace: true })
+          return
+        }
         next()
       }catch(err){
           console.log(err)
@@ -33,7 +40,7 @@ router.beforeEach(async (to, from, next) => {
           localStorage.removeItem('token')
           // 清空用户信息
           userStore.user= {
-            router: [],
+            routes: [],
             buttons: [],
             roles: [],
             name: '',
@@ -57,7 +64,7 @@ router.beforeEach(async (to, from, next) => {
 })
 
 // 全局后置守卫
-router.afterEach((to, from) => {
+router.afterEach(() => {
   // 隐藏进度条
   nprogress.done()
 })

@@ -4,19 +4,19 @@
     <el-card style="margin:10px 0px">
       <div v-show="scene == 0">
         <el-button @click="addSpu" type="primary" size="default" icon="Plus"
-          :disabled="categoryStore.c3Id ? false : true">添加SPU</el-button>
+          :disabled="categoryStore.c3Id ? false : true" v-has="'btn.Spu.add'">添加SPU</el-button>
         <el-table style="margin: 10px 0px;" border :data="records">
           <el-table-column label="序号" type="index" align="center" width="80px"></el-table-column>
           <el-table-column label="SPU名称" prop="spuName"></el-table-column>
           <el-table-column label="SPU描述" prop="description" show-overflow-tooltip></el-table-column>
           <el-table-column label="SPU操作">
             <template #default="{ row }">
-              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku(row)"></el-button>
-              <el-button type="primary" size="small" icon="Edit" title="修改SPU" @click="updateSpu(row)"></el-button>
-              <el-button type="primary" size="small" icon="View" title="查看SKU列表" @click="findSku(row)"></el-button>
+              <el-button type="primary" size="small" icon="Plus" title="添加SKU" @click="addSku(row)" v-has="'btn.Sku.add'"></el-button>
+              <el-button type="primary" size="small" icon="Edit" title="修改SPU" @click="updateSpu(row)" v-has="'btn.Spu.update'"></el-button>
+              <el-button type="primary" size="small" icon="View" title="查看SKU列表" @click="findSku(row)" v-has="'btn.Spu.skus'"></el-button>
               <el-popconfirm :title="`你确定删除${row.spuName}?`" width="200px" @confirm="deleteSpu(row)">
                 <template #reference>
-                  <el-button type="primary" size="small" icon="Delete" title="删除SPU"></el-button>
+                  <el-button type="primary" size="small" icon="Delete" title="删除SPU" v-has="'btn.Spu.delete'"></el-button>
                 </template>
               </el-popconfirm>
             </template>

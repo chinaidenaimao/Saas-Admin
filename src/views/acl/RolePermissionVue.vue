@@ -19,11 +19,11 @@
       <el-table-column prop="updateTime" label="修改时间" />
       <el-table-column label="操作" width="350" align="center">
         <template #default="{ row }">
-          <el-button type="primary" :disabled="row.level === 4" @click="addMenu(row)">
+          <el-button type="primary" :disabled="row.level === 4" @click="addMenu(row)" v-has="'btn.Permission.add'">
             {{ row.level === 3 ? '添加功能' : '添加菜单' }}
           </el-button>
-          <el-button type="primary" :disabled="row.level === 1" @click="edit(row)">编辑</el-button>
-          <el-button type="primary" :disabled="row.level === 1" @click="dodeleteMenu(row)">删除</el-button>
+          <el-button type="primary" :disabled="row.level === 1" @click="edit(row)" v-has="'btn.Permission.update'">编辑</el-button>
+          <el-button type="primary" :disabled="row.level === 1" @click="dodeleteMenu(row)" v-has="'btn.Permission.remove'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

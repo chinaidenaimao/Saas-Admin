@@ -39,9 +39,9 @@
     </el-dialog>
       <el-card >
         <div class="header">
-        <el-button type="primary" @click="handleAddClick">
+        <el-button type="primary" @click="handleAddClick" v-has="'btn.Trademark.add'">
             <el-icon><Plus></Plus></el-icon>
-            添加商品</el-button>
+            添加品牌</el-button>
         </div>
         <el-table :data="tableData"  border style="width: 100%;"  >
             <el-table-column prop="id" label="序号" width="240" />
@@ -53,8 +53,8 @@
             </el-table-column>
             <el-table-column prop="address" label="品牌操作"  fixed="right"  align="center" >
               <template #default="scoped">
-                <el-button type="primary"  style="margin-right: 20px;" @click="handleAddClick(scoped.row)">编辑</el-button>
-                <el-button type="danger" @click="deleteTrademarkdata(scoped.row.id)" >删除</el-button>
+                <el-button type="primary"  style="margin-right: 20px;" @click="handleAddClick(scoped.row)" v-has="'btn.Trademark.update'">编辑</el-button>
+                <el-button type="danger" @click="deleteTrademarkdata(scoped.row.id)" v-has="'btn.Trademark.remove'">删除</el-button>
               </template>
             </el-table-column>
       </el-table>
