@@ -123,7 +123,11 @@ const fullscreen=()=>{
 }
 // 退出登录
 const logout=async ()=>{
-  await reqLogout()
+  try{
+    await reqLogout()
+  }catch{
+    ElMessage.error('退出登录接口调用失败，已清除本地状态')
+  } 
   // 清空token
   localStorage.removeItem('token')
   // 清空用户信息
@@ -134,6 +138,9 @@ const logout=async ()=>{
     name: '',
     avatar: '',
 }
+// 登录失败后，将isLogin设置为false
+useUserStore().isLogin=false
+useUserStore().menuList= []
   router.push({name:'login'})
   ElMessage.success('退出登录成功')
 }

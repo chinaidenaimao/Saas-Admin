@@ -5,16 +5,26 @@ export interface ResponseData<T> {
   data: T
 }
 
-export interface Attr {
+export interface SkuAttr {
   id?: number
   attrId: number | string
   valueId: number | string
+  attrName?: string
+  valueName?: string
 }
 
-export interface saleArr {
+export interface SkuSaleAttr {
   id?: number
   saleAttrId: number | string
   saleAttrValueId: number | string
+  saleAttrName?: string
+  saleAttrValueName?: string
+}
+
+export interface SkuImage {
+  id?: number
+  imgUrl?: string
+  imgName?: string
 }
 
 export interface SkuData {
@@ -25,17 +35,15 @@ export interface SkuData {
   price?: string | number
   weight?: string | number
   skuDesc?: string
-  skuAttrValueList?: Attr[]
-  skuSaleAttrValueList?: saleArr[]
+  skuAttrValueList?: SkuAttr[]
+  skuSaleAttrValueList?: SkuSaleAttr[]
   skuDefaultImg?: string
   isSale?: number
   id?: number
-  skuImageList?: { id: number; imgUrl: string }[]
-  skuSaleAttrValueList2?: { saleAttrName: string; saleAttrValueName: string }[]
-  skuAttrValueList2?: { attrName: string; valueName: string }[]
+  skuImageList?: SkuImage[]
 }
 
-export interface SkuResponseData extends ResponseData<{
+export type SkuResponseData = ResponseData<{
   records: SkuData[]
   total: number
   size: number
@@ -47,35 +55,6 @@ export interface SkuResponseData extends ResponseData<{
   maxLimit: null
   searchCount: boolean
   pages: number
-}> {}
+}>
 
-export interface SkuInfoData extends ResponseData<SkuData> {}
-
-// SKU 详情中的扩展属性（后端返回带 name 字段）
-export interface SkuDetailAttr {
-  id?: number
-  attrId: number | string
-  valueId: number | string
-  attrName?: string
-  valueName?: string
-}
-
-export interface SkuDetailSaleAttr {
-  id?: number
-  saleAttrId: number | string
-  saleAttrValueId: number | string
-  saleAttrName?: string
-  saleAttrValueName?: string
-}
-
-export interface SkuDetailImg {
-  id?: number
-  imgUrl?: string
-  imgName?: string
-}
-
-export interface SkuDetailData extends SkuData {
-  skuAttrValueList?: SkuDetailAttr[]
-  skuSaleAttrValueList?: SkuDetailSaleAttr[]
-  skuImageList?: SkuDetailImg[]
-}
+export type SkuInfoData = ResponseData<SkuData>

@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import Top from './components/top/index.vue';
 import Tourist from './components/tourist/index.vue';
 import Sex from './components/sex/index.vue';
@@ -37,9 +37,7 @@ import Year from './components/year/index.vue';
 import Counter from './components/couter/index.vue';
 
 const screen = ref();
-onMounted(() => {
-    screen.value.style.transform = `scale(${getScale()}) translate(-50%,-50%)`;
-});
+let resizeHandler: (() => void) | null = null;
 
 function getScale(w = 1920, h = 1080) {
     const ww = window.innerWidth / w;
@@ -47,9 +45,19 @@ function getScale(w = 1920, h = 1080) {
     return ww < wh ? ww : wh;
 }
 
-window.onresize = () => {
+onMounted(() => {
     screen.value.style.transform = `scale(${getScale()}) translate(-50%,-50%)`;
-};
+    resizeHandler = () => {
+        screen.value.style.transform = `scale(${getScale()}) translate(-50%,-50%)`;
+    };
+    window.addEventListener('resize', resizeHandler);
+});
+
+onUnmounted(() => {
+    if (resizeHandler) {
+        window.removeEventListener('resize', resizeHandler);
+    }
+});
 </script>
 
 <style scoped lang="scss">

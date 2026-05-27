@@ -12,3 +12,36 @@ export const isHas=(app:App,)=>{
     }
   })
 }
+export const lazy_image = (app: App) => {
+  app.directive('lazy-image', {
+    mounted(el, binding) {
+      if (binding.value) {
+        // 保存 src，设置占位图
+        el.dataset.src = binding.value;
+        el.src = '';
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              el.src = el.dataset.src || binding.value;
+              observer.unobserve(el);
+            }
+          });
+        }, {
+          rootMargin: '200px 0px'  // 提前 200px 加载
+        });
+
+        observer.observe(el);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (el as any)._lazyObserver = observer;  // 挂到元素上
+      }
+    },
+    unmounted(el) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const observer = (el as any)._lazyObserver;
+      if (observer) {
+        observer.unobserve(el);
+        observer.disconnect();
+      }
+    }
+  });
+};

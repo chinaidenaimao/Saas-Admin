@@ -39,17 +39,15 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/counter'
-import { ref } from 'vue'
 
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 const isCollapse = computed(() => userStore.isCollapse)
 const menuList = computed(() => userStore.menuList)
-const isActive = ref(route.path)
+const isActive = computed(() => route.path)
 function handleSelect(index: string) {
   router.push({path: index})
-  isActive.value = index
 }
 
 </script>

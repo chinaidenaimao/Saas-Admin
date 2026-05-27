@@ -21,9 +21,15 @@ router.beforeEach(async (to, from, next) => {
   if (token) {
     if (to.name !== 'login') {
       // 登录成功后，将用户信息存储到store中
+      if(userStore.isLogin){
+        next()
+        return
+      }
       try{
         const userInfo=await reqUserInfo()
         userStore.user=userInfo.data
+        // 登录成功后，将isLogin设置为true
+        userStore.isLogin=true
         // 登录成功后，获取用户路由
         userStore.getRouter()
         // 刷新页面后首次导航未匹配到路由，重试一次
@@ -35,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
       }catch(err){
           console.log(err)
           // 登录失败后，跳转登录页
-          await reqLogout()
+          try { await reqLogout() } catch {}
           // 清空token
           localStorage.removeItem('token')
           // 清空用户信息
@@ -46,6 +52,8 @@ router.beforeEach(async (to, from, next) => {
             name: '',
             avatar: '',
         }
+        // 登录失败后，将isLogin设置为false
+        userStore.isLogin=false
         next({ name: 'login' })
       }
     } else {

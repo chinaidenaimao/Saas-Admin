@@ -48,7 +48,9 @@
             <el-table-column prop="tmName" label="品牌名称" min-width="100" max-width="300" align="center" />
             <el-table-column prop="logoUrl" label="商品logo"  min-width="100" max-width="300" :lazy="true"  align="center">
               <template #default="scoped">
-                <el-image :src="scoped.row.logoUrl" alt="" style="width: 100px; height: 100px;" fit="contain" />
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <img v-lazy-image="scoped.row.logoUrl" alt="" style="width: 100px; height: 100px;" fit="contain"  :key="scoped.row.logoUrl"/>
+                </div>
               </template>
             </el-table-column>
             <el-table-column prop="address" label="品牌操作"  fixed="right"  align="center" >

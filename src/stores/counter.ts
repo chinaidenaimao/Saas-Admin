@@ -25,6 +25,8 @@ export const useUserStore=defineStore('user',()=>{
     name: '',
     avatar: '',
   })
+  // 是否登录成功
+  const isLogin=ref(false)
   // 菜单列表
   const menuList=ref(constantRoute)
   // 是否折叠菜单
@@ -51,5 +53,5 @@ export const useUserStore=defineStore('user',()=>{
       router.addRoute(item);
     })
   }
-  return {token,user,menuList,isCollapse,isRefresh,filterRoute,getRouter}
+  return {token,user,menuList,isCollapse,isRefresh,filterRoute,getRouter,isLogin}
 })

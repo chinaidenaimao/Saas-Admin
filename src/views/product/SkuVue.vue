@@ -79,7 +79,7 @@
 import { ref, onMounted } from 'vue'
 import type { ResponseData } from '@/apis/product/sku/type'
 import { reqSkuList, reqSaleSku, reqCancelSale, reqSkuInfo, reqRemoveSku } from '@/apis/product/sku'
-import type { SkuResponseData, SkuData, SkuInfoData, SkuDetailData } from '@/apis/product/sku/type'
+import type { SkuResponseData, SkuData, SkuInfoData } from '@/apis/product/sku/type'
 import { ElMessage } from 'element-plus'
 
 const pageNo = ref<number>(1)
@@ -87,7 +87,7 @@ const pageSize = ref<number>(10)
 const total = ref<number>(0)
 const skuArr = ref<SkuData[]>([])
 const drawer = ref<boolean>(false)
-const skuInfo = ref<SkuDetailData>({} as SkuDetailData)
+const skuInfo = ref<SkuData>({} as SkuData)
 
 onMounted(() => { getHasSku() })
 
